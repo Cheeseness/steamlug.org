@@ -22,6 +22,7 @@ foreach ($data["events"] as $event) {
 	}
 	$d = explode("-", $event['date']);
 	$t = explode(":", $event['time']);
+	$dt = $event['date'] . " " . $event['time'] . " " . $event['tz'];
 	$u = $event['url'];
 	$c = preg_replace("#(.*)(S[0-9][0-9])(E[0-9][0-9])(.*)#", "\$3", $event["title"]);
 	$s = preg_replace("#(.*)(S[0-9][0-9])(E[0-9][0-9])(.*)#", "\$2", $event["title"]);
@@ -94,20 +95,21 @@ if (isset($d) && strtotime($d[0] . "-" . $d[1] . "-" .$d[2])-strtotime(date("Y-m
 	$aboutPage .= "\t\t\t<h1>Upcoming Episode:</h1>\n";
 	$aboutPage .= "\t\t\t<h2><a href = '" . $u . "'>" . $s . ", ". $c . "</a></h2>\n";
 	$aboutPage .= "\t\t\t<p>Listen in live as our hosts and guests discuss Linux gaming!</p>\n";
+	$aboutPage .= "\t\t\t<p>This episode will be recorded on " . $dt . ".</p>\n";
 	$aboutPage .= "\t\t\t<h3 class = 'detailLink' ><a href = '" . $u . "'>Click for details</a></h3>\n"; 
 	$aboutPage .= "\t\t\t<div id='countdown'>\n";
 	$aboutPage .= "\t\t\t\t<div>Days<br />\n";
 	$aboutPage .= "\t\t\t\t\t<span id='d1' class = 'counterDigit'>0</span>\n";
 	$aboutPage .= "\t\t\t\t\t<span id='d2' class = 'counterDigit'>0</span>\n";
-	$aboutPage .= "\t\t\t\t</div>";
+	$aboutPage .= "\t\t\t\t</div>\n";
 	$aboutPage .= "\t\t\t\t<div>Hours<br />\n";
 	$aboutPage .= "\t\t\t\t\t<span id='h1' class = 'counterDigit'>0</span>\n";
 	$aboutPage .= "\t\t\t\t\t<span id='h2' class = 'counterDigit'>0</span>\n";
-	$aboutPage .= "\t\t\t\t</div>";
+	$aboutPage .= "\t\t\t\t</div>\n";
 	$aboutPage .= "\t\t\t\t<div>Minutes<br />\n";
 	$aboutPage .= "\t\t\t\t\t<span id='m1' class = 'counterDigit'>0</span>\n";
 	$aboutPage .= "\t\t\t\t\t<span id='m2' class = 'counterDigit'>0</span>\n";
-	$aboutPage .= "\t\t\t\t</div>";
+	$aboutPage .= "\t\t\t\t</div>\n";
 	$aboutPage .= "\t\t\t\t<div>Seconds<br />\n";
 	$aboutPage .= "\t\t\t\t\t<span id='s1' class = 'counterDigit'>0</span>\n";
 	$aboutPage .= "\t\t\t\t\t<span id='s2' class = 'counterDigit'>0</span>\n";
