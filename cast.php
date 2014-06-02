@@ -22,6 +22,7 @@ foreach ($data["events"] as $event) {
 	}
 	$d = explode("-", $event['date']);
 	$t = explode(":", $event['time']);
+	$u = $event['url'];
 	$c = preg_replace("#(.*)(S[0-9][0-9])(E[0-9][0-9])(.*)#", "\$3", $event["title"]);
 	$s = preg_replace("#(.*)(S[0-9][0-9])(E[0-9][0-9])(.*)#", "\$2", $event["title"]);
 	break;
@@ -68,10 +69,14 @@ if ($season == "0" || $episode == "0" || !glob($path . "/s" . basename($season) 
 	$aboutPage .= "\t\t<div class='shadow'>\n";
 	$aboutPage .= "\t\t\t<h1>About</h1>\n";
 	$aboutPage .= "\t\t\t<p>SteamLUG Cast is a casual, fortnightly live audiocast held on the <a href = '/mumble'>SteamLUG Mumble server</a> which aims to provide interesting news and discussion for the SteamLUG and broader Linux gaming communities.</p>\n";
-	$aboutPage .= "\t\t\t<p>Our current hosts are:</p>\n";
+	$aboutPage .= "\t\t\t<p>Our current list of rotating hosts include:</p>\n";
 	$aboutPage .= "\t\t\t<ul>\n";
 	$aboutPage .= "\t\t\t\t<li><a href='http://steamcommunity.com/id/cheeseness'>Cheeseness</a> - SteamLUG's benevolent leadery person</li>\n";
+	$aboutPage .= "\t\t\t\t<li><a href='http://steamcommunity.com/id/swordfischer'>DerRidda</a> - SteamLUG admin</li>\n";
 	$aboutPage .= "\t\t\t\t<li><a href='http://steamcommunity.com/id/johndrinkwater'>johndrinkwater</a> - SteamLUG admin and volunteer Valve github maintainer</li>\n";
+	$aboutPage .= "\t\t\t\t<li><a href='http://steamcommunity.com/id/meklu'>meklu</a> - SteamLUG admin and founder of the #SteamLUG IRC channel</li>\n";
+	$aboutPage .= "\t\t\t\t<li><a href='http://steamcommunity.com/profiles/76561198019230245'>Mimness</a> - SteamLUG gamer and independent artist</li>\n";
+	$aboutPage .= "\t\t\t\t<li><a href='http://steamcommunity.com/profiles/76561198074408394/'>Nemoder</a> - SteamLUG admin and North American server admin<li>\n";
 	$aboutPage .= "\t\t\t\t<li><a href='http://steamcommunity.com/id/swordfischer'>swordfischer</a> - SteamLUG's chief event organiserer</li>\n";
 	$aboutPage .= "\t\t\t</ul>\n";
 	$aboutPage .= "\t\t\t<p>From time to time, we also have guests joining to share their insights on Linux, the gaming industry and the SteamLUG community. Check back for recording archives, shownotes and further announcements!</p>\n";
@@ -87,8 +92,9 @@ if (isset($d) && strtotime($d[0] . "-" . $d[1] . "-" .$d[2])-strtotime(date("Y-m
 	$aboutPage .= "\t<article id = 'nextevent'>\n";
 	$aboutPage .= "\t\t<div>\n";
 	$aboutPage .= "\t\t\t<h1>Upcoming Episode:</h1>\n";
-	$aboutPage .= "\t\t\t<h2>" . $s . ", ". $c . "</h2>\n";
-	$aboutPage .= "\t\t\t<p>Cheese, john and sword talk about SteamLUG Casty things!</p>\n";
+	$aboutPage .= "\t\t\t<h2><a href = '" . $u . "'>" . $s . ", ". $c . "</a></h2>\n";
+	$aboutPage .= "\t\t\t<p>Listen in live as our hosts and guests discuss Linux gaming!</p>\n";
+	$aboutPage .= "\t\t\t<h3 class = 'detailLink' ><a href = '" . $u . "'>Click for details</a></h3>\n"; 
 	$aboutPage .= "\t\t\t<div id='countdown'>\n";
 	$aboutPage .= "\t\t\t\t<div>Days<br />\n";
 	$aboutPage .= "\t\t\t\t\t<span id='d1' class = 'counterDigit'>0</span>\n";
@@ -244,8 +250,8 @@ else
 		$episodeMp3FS  = (file_exists($episodeBase . ".mp3") ? round(filesize($episodeBase . ".mp3")/1024/1024,2) : "N/A");
 		$listItem .= "\t\t\t<tr>\n";
 		$listItem .= "\t\t\t\t<td><a href='/cast/s" . slenc($matches[1]) . "e" . slenc($matches[2]) . "'>S" . slenc($matches[1]) . "E" .  slenc($matches[2]) . "</a></td>\n";
-		$listItem .= "\t\t\t\t<td><img src='/images/sound_grey.png' alt='Listen'><a href='/cast/s" . slenc($matches[1]) . "e"
-			  . slenc($matches[2]) . "'>" .  slenc(str_replace('-', ' ', ucfirst($matches[3]))) . "</a></td>\n";
+		$listItem .= "\t\t\t\t<td><a href='/cast/s" . slenc($matches[1]) . "e"
+			  . slenc($matches[2]) . "'><img src='/images/sound_grey.png' alt='Listen'> " .  slenc(str_replace('-', ' ', ucfirst($matches[3]))) . "</a></td>\n";
 		$listItem .= "\t\t\t\t<td>" . ( $episodeOggFS > 0 ? "<a download href='$archiveBase.ogg'><img src='/images/disk.png' alt='Download'>" . $episodeOggFS . " MB" : "N/A" ) . "</a></td>\n";
 		$listItem .= "\t\t\t\t<td>" . ( $episodeFlacFS > 0 ? "<a download href='$archiveBase.flac'><img src='/images/disk.png' alt='Download'>" . $episodeFlacFS . " MB" : "N/A" ) . "</a></td>\n";
 		$listItem .= "\t\t\t\t<td>" . ( $episodeMp3FS > 0 ? "<a download href='$archiveBase.mp3'><img src='/images/disk.png' alt='Download'>" . $episodeMp3FS . " MB" : "N/A" ) . "</a></td>\n";
